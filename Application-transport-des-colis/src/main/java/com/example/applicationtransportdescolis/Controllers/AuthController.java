@@ -1,4 +1,5 @@
 package com.example.applicationtransportdescolis.Controllers;
+import com.example.applicationtransportdescolis.Configuration.JwtUtils;
 import com.example.applicationtransportdescolis.Repositories.UserRepositorie;
 import com.example.applicationtransportdescolis.Services.UserService;
 import com.example.applicationtransportdescolis.Entities.User;
@@ -19,12 +20,15 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
+    private final JwtUtils jwtUtils;
 
-    public AuthController(UserRepositorie userRepositorie, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserService userService) {
+
+    public AuthController(UserRepositorie userRepositorie, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserService userService, JwtUtils jwtUtils) {
         this.userRepositorie = userRepositorie;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
+        this.jwtUtils = jwtUtils;
     }
 
     @PostMapping("/register")
@@ -43,9 +47,9 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
             );
 
-            String fakeToken = "mocked-jwt-token";
+            String token = jwtUtils.generateJwtToken(user.getUsername());
 
-            return ResponseEntity.ok(new LoginResponse(fakeToken));
+            return ResponseEntity.ok(new LoginResponse(token));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }

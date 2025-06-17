@@ -1,6 +1,5 @@
 package com.example.applicationtransportdescolis.Configuration;
 import com.example.applicationtransportdescolis.Services.CustomUserDetailService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,13 +26,15 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/v1/auth/login", "/api/v1/auth/register","/api/v1/auth/countUser").permitAll()
+                        auth.requestMatchers("/api/v1/auth/login", "/api/v1/auth/register","/api/v1/auth/countUser","/trajets").permitAll()
                                 .anyRequest().authenticated())
+                //.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
