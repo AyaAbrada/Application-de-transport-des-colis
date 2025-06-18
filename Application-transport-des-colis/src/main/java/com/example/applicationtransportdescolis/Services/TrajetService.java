@@ -1,8 +1,6 @@
 package com.example.applicationtransportdescolis.Services;
-
 import com.example.applicationtransportdescolis.Configuration.JwtUtils;
 import com.example.applicationtransportdescolis.Dto.TrajetDto;
-import com.example.applicationtransportdescolis.Entities.Demande;
 import com.example.applicationtransportdescolis.Entities.Role;
 import com.example.applicationtransportdescolis.Entities.Trajet;
 import com.example.applicationtransportdescolis.Entities.User;
@@ -19,15 +17,15 @@ public class TrajetService {
     private final TrajetRepositorie trajetRepositorie;
     private final UserRepositorie userRepositorie;
     private final JwtUtils jwtUtils;
-    private final DemandeService demandeService;
 
-    // Injection par constructeur
-    public TrajetService(TrajetRepositorie trajetRepositorie, UserRepositorie userRepositorie,
-                         JwtUtils jwtUtils, DemandeService demandeService) {
+    public TrajetService(
+            TrajetRepositorie trajetRepositorie,
+            UserRepositorie userRepositorie,
+            JwtUtils jwtUtils
+    ) {
         this.trajetRepositorie = trajetRepositorie;
         this.userRepositorie = userRepositorie;
         this.jwtUtils = jwtUtils;
-        this.demandeService = demandeService;
     }
 
     public List<Trajet> listAllTrajets() {
@@ -38,31 +36,17 @@ public class TrajetService {
         return trajetRepositorie.findById(id);
     }
 
-    public Trajet createNewTrajet(TrajetDto trajet, String token) {
+    public Trajet createNewTrajet(TrajetDto dto) {
 
-        String usernameFromToken = jwtUtils.extractUsername(token.substring(7));
 
-        User user = userRepositorie.findByUsernameOrEmail(usernameFromToken);
-        if (user == null) {
-            throw new RuntimeException("User not found from token");
-        }
+        Trajet newTrajet = new Trajet();
+        newTrajet.setConducteur(null);
+        newTrajet.setLieuDepart(dto.lieuDepart());
+        newTrajet.setEtapes(dto.etapes());
+        newTrajet.setDestination(dto.destination());
+        newTrajet.setTypeMarchandise(dto.typeMarchandise());
+        newTrajet.setCapaciteDesponible(dto.capaciteDesponible());
 
-        Demande demande = demandeService.getDemandeById(trajet.conducteurId());
-
-        if (user.getRole() == Role.CONDUCTEUR) {
-            Trajet newTrajet = new Trajet();
-
-            newTrajet.setConducteurId(trajet.conducteurId());
-            newTrajet.setLieuDepart(trajet.lieuDepart());
-            newTrajet.setEtapes(trajet.etapes());
-            newTrajet.setDestination(trajet.destination());
-            newTrajet.setTypeMarchandise(trajet.typeMarchandise());
-            newTrajet.setCapaciteDesponible(trajet.capaciteDesponible());
-
-            return trajetRepositorie.save(newTrajet);
-
-        } else {
-            throw new RuntimeException("Unauthorized action");
-        }
+        return trajetRepositorie.save(newTrajet);
     }
 }

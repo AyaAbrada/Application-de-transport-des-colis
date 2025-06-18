@@ -15,7 +15,6 @@ public class TrajetController {
 
     private final TrajetService trajetService;
 
-    // Injection par constructeur
     public TrajetController(TrajetService trajetService) {
         this.trajetService = trajetService;
     }
@@ -31,7 +30,7 @@ public class TrajetController {
     }
 
     @PostMapping
-    public Trajet create(@RequestBody TrajetDto trajet, @RequestHeader("Authorization") String token) {
-        return trajetService.createNewTrajet(trajet, token);
+    public Trajet create(@RequestBody TrajetDto trajet) {
+        return trajetService.createNewTrajet(trajet);
     }
 }

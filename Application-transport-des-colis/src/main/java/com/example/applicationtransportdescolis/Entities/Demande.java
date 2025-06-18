@@ -6,10 +6,8 @@ public class Demande {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
-    private int expeduteurId ;
-    private int trajetId;
+
     private float poids;
     private String type;
     private float longeur;
@@ -19,93 +17,64 @@ public class Demande {
     @Enumerated(EnumType.STRING)
     private Statut statut;
 
+    @ManyToOne
+    @JoinColumn(name = "expediteur_id")
+    private User expediteur;
+
+    @ManyToOne
+    @JoinColumn(name = "trajet_id")
+    private Trajet trajet;
+
     public Demande() {
-
     }
 
-    public Demande( int id ,int expeduteurId, int trajetId, float poids, String type, float longeur, float largeur, float hauteur, Statut statut) {
+    public Demande(int id, float poids, String type, float longeur, float largeur, float hauteur, Statut statut, User expediteur, Trajet trajet) {
         this.id = id;
-        this.expeduteurId = expeduteurId;
-        this.trajetId = trajetId;
         this.poids = poids;
         this.type = type;
         this.longeur = longeur;
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.statut = statut;
+        this.expediteur = expediteur;
+        this.trajet = trajet;
     }
 
-    public int getId() {
-        return id;
-    }
+    // Getters and setters
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public int getId() { return id; }
 
-    public int getExpeduteurId() {
-        return expeduteurId;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public void setExpeduteurId(int expeduteurId) {
-        this.expeduteurId = expeduteurId;
-    }
+    public float getPoids() { return poids; }
 
-    public int getTrajetId() {
-        return trajetId;
-    }
+    public void setPoids(float poids) { this.poids = poids; }
 
-    public void setTrajetId(int trajetId) {
-        this.trajetId = trajetId;
-    }
+    public String getType() { return type; }
 
-    public float getPoids() {
-        return poids;
-    }
+    public void setType(String type) { this.type = type; }
 
-    public void setPoids(float poids) {
-        this.poids = poids;
-    }
+    public float getLongeur() { return longeur; }
 
-    public String getType() {
-        return type;
-    }
+    public void setLongeur(float longeur) { this.longeur = longeur; }
 
-    public void setType(String type) {
-        this.type = type;
-    }
+    public float getLargeur() { return largeur; }
 
-    public float getLongeur() {
-        return longeur;
-    }
+    public void setLargeur(float largeur) { this.largeur = largeur; }
 
-    public void setLongeur(float longeur) {
-        this.longeur = longeur;
-    }
+    public float getHauteur() { return hauteur; }
 
-    public float getLargeur() {
-        return largeur;
-    }
+    public void setHauteur(float hauteur) { this.hauteur = hauteur; }
 
-    public void setLargeur(float largeur) {
-        this.largeur = largeur;
-    }
+    public Statut getStatut() { return statut; }
 
-    public float getHauteur() {
-        return hauteur;
-    }
+    public void setStatut(Statut statut) { this.statut = statut; }
 
-    public void setHauteur(float hauteur) {
-        this.hauteur = hauteur;
-    }
+    public User getExpediteur() { return expediteur; }
 
-    public Statut getStatut() {
-        return statut;
-    }
+    public void setExpediteur(User expediteur) { this.expediteur = expediteur; }
 
-    public void setStatut(Statut statut) {
-        this.statut = statut;
-    }
+    public Trajet getTrajet() { return trajet; }
 
-
+    public void setTrajet(Trajet trajet) { this.trajet = trajet; }
 }

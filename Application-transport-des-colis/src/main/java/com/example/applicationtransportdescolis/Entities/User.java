@@ -1,11 +1,11 @@
 package com.example.applicationtransportdescolis.Entities;
 import jakarta.persistence.*;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
 @Entity
@@ -21,6 +21,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "conducteur")
+    private List<Trajet> trajets;
+
+    @OneToMany(mappedBy = "expediteur")
+    private List<Demande> demandes;
 
     public long getId() { return id; }
 
