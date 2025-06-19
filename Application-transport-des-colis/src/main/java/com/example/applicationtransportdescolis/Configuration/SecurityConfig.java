@@ -1,5 +1,4 @@
 package com.example.applicationtransportdescolis.Configuration;
-
 import com.example.applicationtransportdescolis.Filter.JwtFilter;
 import com.example.applicationtransportdescolis.Services.CustomUserDetailService;
 import org.springframework.context.annotation.Bean;

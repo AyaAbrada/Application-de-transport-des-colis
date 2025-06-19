@@ -17,8 +17,12 @@ public class Trajet {
     private List<String> etapes;
 
     private String destination;
-    private String typeMarchandise;
+
+    @Enumerated(EnumType.STRING)
+    private TypeMarchandise typeMarchandise;
+
     private float capaciteDesponible;
+
 
     @ManyToOne
     @JoinColumn(name = "conducteur_id")
@@ -27,17 +31,27 @@ public class Trajet {
     public Trajet() {
     }
 
-    public Trajet(int id, String lieuDepart, List<String> etapes, String destination, String typeMarchandise, float capaciteDesponible, User conducteur) {
+
+    public Trajet(int id, String lieuDepart, List<String> etapes, String destination, float capaciteDesponible, User conducteur , TypeMarchandise typeMarchandise) {
         this.id = id;
         this.lieuDepart = lieuDepart;
         this.etapes = etapes;
         this.destination = destination;
-        this.typeMarchandise = typeMarchandise;
         this.capaciteDesponible = capaciteDesponible;
         this.conducteur = conducteur;
+        this.typeMarchandise = typeMarchandise;
     }
 
     // Getters and setters
+
+
+    public TypeMarchandise getTypeMarchandise() {
+        return typeMarchandise;
+    }
+
+    public void setTypeMarchandise(TypeMarchandise typeMarchandise) {
+        this.typeMarchandise = typeMarchandise;
+    }
 
     public int getId() { return id; }
 
@@ -54,10 +68,6 @@ public class Trajet {
     public String getDestination() { return destination; }
 
     public void setDestination(String destination) { this.destination = destination; }
-
-    public String getTypeMarchandise() { return typeMarchandise; }
-
-    public void setTypeMarchandise(String typeMarchandise) { this.typeMarchandise = typeMarchandise; }
 
     public float getCapaciteDesponible() { return capaciteDesponible; }
 

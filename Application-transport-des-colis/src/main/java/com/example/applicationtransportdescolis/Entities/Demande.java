@@ -77,4 +77,5 @@ public class Demande {
     public Trajet getTrajet() { return trajet; }
 
     public void setTrajet(Trajet trajet) { this.trajet = trajet; }
+
 }

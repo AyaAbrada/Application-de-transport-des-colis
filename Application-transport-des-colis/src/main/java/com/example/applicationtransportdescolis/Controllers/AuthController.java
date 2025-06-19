@@ -9,8 +9,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -57,7 +57,6 @@ public class AuthController {
 
     @GetMapping("/countUser")
     public List<User> countUser() {
-
         return userService.allUser();
     }
 }

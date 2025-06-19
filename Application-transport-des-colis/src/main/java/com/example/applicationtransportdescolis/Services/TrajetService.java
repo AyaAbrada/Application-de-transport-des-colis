@@ -3,11 +3,13 @@ import com.example.applicationtransportdescolis.Configuration.JwtUtils;
 import com.example.applicationtransportdescolis.Dto.TrajetDto;
 import com.example.applicationtransportdescolis.Entities.Role;
 import com.example.applicationtransportdescolis.Entities.Trajet;
+import com.example.applicationtransportdescolis.Entities.TypeMarchandise;
 import com.example.applicationtransportdescolis.Entities.User;
 import com.example.applicationtransportdescolis.Repositories.TrajetRepositorie;
 import com.example.applicationtransportdescolis.Repositories.UserRepositorie;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,4 +51,5 @@ public class TrajetService {
 
         return trajetRepositorie.save(newTrajet);
     }
+
 }
