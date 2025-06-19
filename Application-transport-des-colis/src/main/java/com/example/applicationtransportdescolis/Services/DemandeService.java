@@ -10,6 +10,9 @@ import com.example.applicationtransportdescolis.Repositories.TrajetRepositorie;
 import com.example.applicationtransportdescolis.Repositories.UserRepositorie;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class DemandeService {
@@ -32,6 +35,10 @@ public class DemandeService {
     public Demande getDemandeById(int id) {
         return demandeRepository.findById(id).orElse(null);
     }
+    public List<Demande> listAllDemandes() {
+        return demandeRepository.findAll();
+    }
+
 
     public Demande createDemande(DemandeDto demandeDto, String token) {
         // Extraire le nom d'utilisateur depuis le token

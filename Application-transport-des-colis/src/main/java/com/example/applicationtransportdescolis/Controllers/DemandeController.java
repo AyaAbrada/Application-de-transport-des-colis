@@ -1,5 +1,4 @@
 package com.example.applicationtransportdescolis.Controllers;
-
 import com.example.applicationtransportdescolis.Configuration.JwtUtils;
 import com.example.applicationtransportdescolis.Dto.DemandeDto;
 import com.example.applicationtransportdescolis.Entities.Demande;
@@ -9,10 +8,9 @@ import com.example.applicationtransportdescolis.Entities.User;
 import com.example.applicationtransportdescolis.Repositories.DemandeRepositorie;
 import com.example.applicationtransportdescolis.Repositories.TrajetRepositorie;
 import com.example.applicationtransportdescolis.Repositories.UserRepositorie;
-import com.example.applicationtransportdescolis.Repositories.TrajetRepositorie;
-import com.example.applicationtransportdescolis.Repositories.DemandeRepositorie;
-
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/demandes")
@@ -33,6 +31,16 @@ public class DemandeController {
         this.userRepositorie = userRepositorie;
         this.trajetRepository = trajetRepository;
         this.demandeRepository = demandeRepository;
+    }
+    @GetMapping
+    public List<Demande> getAllDemandes() {
+        return demandeRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Demande getDemandeById(@PathVariable int id) {
+        return demandeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Demande non trouvée avec l'id " + id));
     }
 
     @PostMapping

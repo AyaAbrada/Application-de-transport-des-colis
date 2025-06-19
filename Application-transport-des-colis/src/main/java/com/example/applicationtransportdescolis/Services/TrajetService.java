@@ -51,5 +51,4 @@ public class TrajetService {
 
         return trajetRepositorie.save(newTrajet);
     }
-
 }
