@@ -36,5 +36,14 @@ public class TrajetController {
         return trajetService.createNewTrajet(trajet);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Trajet>> chercherAnnonces(
+            @RequestParam(required = false) String destination,
+            @RequestParam(required = false) String lieuDepart,
+            @RequestParam(required = false) TypeMarchandise typeMarchandise) {
+
+        List<Trajet> resultats = trajetService.chercherAnnonces(destination, lieuDepart, typeMarchandise);
+        return ResponseEntity.ok(resultats);
+    }
 
 }

@@ -1,0 +1,14 @@
+<nav>
+  <ul style="display: flex; gap: 1rem; list-style: none;">
+    <li><a routerLink="/">Accueil</a></li>
+
+    <ng-container *ngIf="!isAuthenticated(); else loggedIn">
+      <li><a routerLink="/login">Login</a></li>
+      <li><a routerLink="/register">Register</a></li>
+    </ng-container>
+
+    <ng-template #loggedIn>
+      <li><a (click)="logout()" style="cursor: pointer;">Logout</a></li>
+    </ng-template>
+  </ul>
+</nav>

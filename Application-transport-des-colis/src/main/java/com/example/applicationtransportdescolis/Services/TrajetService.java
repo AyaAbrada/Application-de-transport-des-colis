@@ -51,5 +51,8 @@ public class TrajetService {
 
         return trajetRepositorie.save(newTrajet);
     }
+    public List<Trajet> chercherAnnonces(String destination, String lieuDepart, TypeMarchandise typeMarchandise) {
+        return trajetRepositorie.findByCriteria(destination, lieuDepart, typeMarchandise);
+    }
 
 }

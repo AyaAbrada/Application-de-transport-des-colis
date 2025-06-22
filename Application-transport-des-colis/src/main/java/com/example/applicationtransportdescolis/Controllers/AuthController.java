@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     private final UserRepositorie userRepositorie;
@@ -66,7 +67,6 @@ public class AuthController {
         }
         return ResponseEntity.badRequest().body("Token manquant.");
     }
-
 
     @GetMapping("/countUser")
     public List<User> countUser() {

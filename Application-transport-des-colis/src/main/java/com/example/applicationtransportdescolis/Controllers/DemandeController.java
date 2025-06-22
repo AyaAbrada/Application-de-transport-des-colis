@@ -8,6 +8,7 @@ import com.example.applicationtransportdescolis.Entities.User;
 import com.example.applicationtransportdescolis.Repositories.DemandeRepositorie;
 import com.example.applicationtransportdescolis.Repositories.TrajetRepositorie;
 import com.example.applicationtransportdescolis.Repositories.UserRepositorie;
+import com.example.applicationtransportdescolis.Services.DemandeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,16 +22,23 @@ public class DemandeController {
     private final UserRepositorie userRepositorie;
     private final TrajetRepositorie trajetRepository;
     private final DemandeRepositorie demandeRepository;
+    private final DemandeService demandeService;
+
 
     public DemandeController(
             JwtUtils jwtUtils,
             UserRepositorie userRepositorie,
             TrajetRepositorie trajetRepository,
-            DemandeRepositorie demandeRepository) {
+            DemandeRepositorie demandeRepository ,
+            DemandeService demandeService
+    ) {
         this.jwtUtils = jwtUtils;
         this.userRepositorie = userRepositorie;
         this.trajetRepository = trajetRepository;
         this.demandeRepository = demandeRepository;
+        this.demandeService = demandeService;
+
+
     }
     @GetMapping
     public List<Demande> getAllDemandes() {
@@ -77,4 +85,16 @@ public class DemandeController {
 
         return demandeRepository.save(demande);
     }
+    @PutMapping("/{id}/statut")
+    public Demande traiterDemande(
+            @PathVariable int id,
+            @RequestParam("action") String action,
+            @RequestHeader("Authorization") String authHeader) {
+
+        String token = authHeader.startsWith("Bearer ") ? authHeader.substring(7) : authHeader;
+
+        return demandeService.traiterDemande(id, action, token);
+    }
+
+
 }

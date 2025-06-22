@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+  <input formControlName="fullName" placeholder="Full Name" required />
+  <input formControlName="username" placeholder="Username" required />
+  <input formControlName="password" type="password" placeholder="Password" required />
+
+  <select formControlName="role" required>
+    <option value="" disabled selected>Select Role</option>
+    <option value="ADMIN">Admin</option>
+    <option value="EXPEDITEUR">Expéditeur</option>
+    <option value="CONDUCTEUR">Conducteur</option>
+  </select>
+
+  <button type="submit">Register</button>
+</form>
