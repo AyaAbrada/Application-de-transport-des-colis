@@ -34,21 +34,28 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        final String authHeader = request.getHeader("Authorization");
+        String requestURI = request.getRequestURI();
 
+        // Ignorer le filtrage JWT pour les endpoints d'authentification
+        if (requestURI.equals("/api/v1/auth/login") || requestURI.equals("/api/v1/auth/register")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        final String authHeader = request.getHeader("Authorization");
         String username = null;
         String token = null;
 
-        // Important: vérifier "Bearer " avec espace
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             try {
                 username = jwtUtils.extractUsername(token);
             } catch (Exception e) {
-                logger.warn("Cannot extract username from JWT token", e);
+                logger.warn("Impossible d'extraire le nom d'utilisateur du token JWT", e);
             }
         }
 
+        // Si on a un username et que l'utilisateur n'est pas encore authentifié dans le contexte de sécurité
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
@@ -64,5 +71,4 @@ public class JwtFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
-
 }

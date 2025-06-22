@@ -1,13 +1,12 @@
 package com.example.applicationtransportdescolis.Controllers;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
 public class LoginResponse {
     private String token;
+    private String role;
 
     public LoginResponse(String token) {
         this.token = token;
+        this.role = role;
     }
 
     public String getToken() {
@@ -17,5 +16,12 @@ public class LoginResponse {
     public void setToken(String token) {
         this.token = token;
     }
-}
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+}

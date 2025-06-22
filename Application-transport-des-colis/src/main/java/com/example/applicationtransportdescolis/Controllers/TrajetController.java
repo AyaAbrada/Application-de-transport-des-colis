@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/trajets")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 public class TrajetController {
 
     private final TrajetService trajetService;

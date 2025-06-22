@@ -1,6 +1,25 @@
 <form (ngSubmit)="login()">
-  <input [(ngModel)]="user.username" name="username" placeholder="Nom d'utilisateur" required />
-  <input [(ngModel)]="user.password" name="password" type="password" placeholder="Mot de passe" required />
+  <input
+    [(ngModel)]="user.username"
+    name="username"
+    placeholder="Nom d'utilisateur"
+    required />
+
+  <input
+    [(ngModel)]="user.password"
+    name="password"
+    type="password"
+    placeholder="Mot de passe"
+    required />
+
+  <!-- Select role -->
+  <select [(ngModel)]="user.role" name="role" required>
+    <option value="" disabled selected>Select Role</option>
+    <option value="ADMIN">ADMIN</option>
+    <option value="EXPEDITEUR">EXPÉDITEUR</option>
+    <option value="CONDUCTEUR">CONDUCTEUR</option>
+  </select>
+
   <button type="submit">Se connecter</button>
 </form>
 

@@ -1,0 +1,54 @@
+<h2>Liste des trajets</h2>
+
+<div class="filters">
+  <input placeholder="Destination" [(ngModel)]="filterDestination" />
+  <input placeholder="Lieu de départ" [(ngModel)]="filterLieuDepart" />
+  <select [(ngModel)]="filterTypeMarchandise">
+    <option [ngValue]="undefined">-- Type Marchandise --</option>
+    <option *ngFor="let type of typesMarchandise" [value]="type">{{type}}</option>
+  </select>
+  <button (click)="loadTrajets()">Filtrer</button>
+</div>
+
+<ul>
+  <li *ngFor="let trajet of trajets">
+    <strong>{{ trajet.lieuDepart }}</strong> → <strong>{{ trajet.destination }}</strong>
+    (Capacité dispo: {{ trajet.capaciteDesponible }}, Type: {{ trajet.typeMarchandise }})
+    <br />
+    Étapes : {{ trajet.etapes.join(' → ') }}
+  </li>
+</ul>
+
+<hr>
+
+<h3>Créer un nouveau trajet</h3>
+
+<div class="form-container">
+  <form (ngSubmit)="submitTrajet()">
+
+    <label>Lieu de départ:</label>
+    <input type="text" [(ngModel)]="newTrajet.lieuDepart" name="lieuDepart" required />
+
+    <label>Étapes:</label>
+    <div *ngFor="let etape of newTrajet.etapes; let i = index" class="etape-field">
+      <input type="text" [(ngModel)]="newTrajet.etapes[i]" [name]="'etape' + i" />
+      <button type="button" (click)="removeEtapeField(i)" *ngIf="newTrajet.etapes.length > 1">-</button>
+    </div>
+    <button type="button" (click)="addEtapeField()">Ajouter étape</button>
+
+    <label>Destination:</label>
+    <input type="text" [(ngModel)]="newTrajet.destination" name="destination" required />
+
+    <label>Type Marchandise:</label>
+    <select [(ngModel)]="newTrajet.typeMarchandise" name="typeMarchandise" required>
+      <option *ngFor="let type of typesMarchandise" [value]="type">{{ type }}</option>
+    </select>
+
+    <label>Capacité disponible:</label>
+    <input type="number" [(ngModel)]="newTrajet.capaciteDesponible" name="capaciteDesponible" required />
+
+    <button type="submit">Créer</button>
+  </form>
+</div>
+
+<p *ngIf="message">{{ message }}</p>

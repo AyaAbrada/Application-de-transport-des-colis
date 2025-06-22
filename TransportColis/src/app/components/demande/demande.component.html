@@ -1,0 +1,63 @@
+<h3>Créer une nouvelle demande</h3>
+
+  <label for="poids">Poids (kg) :</label>
+  <input
+    type="number"
+    id="poids"
+    name="poids"
+    [(ngModel)]="demande.poids"
+    required
+    min="0"
+    step="0.01"
+  />
+
+  <label for="type">Type :</label>
+  <input
+    type="text"
+    id="type"
+    name="type"
+    [(ngModel)]="demande.type"
+    required
+  />
+
+  <label for="longeur">Longueur (cm) :</label>
+  <input
+    type="number"
+    id="longeur"
+    name="longeur"
+    [(ngModel)]="demande.longeur"
+    required
+    min="0"
+    step="0.01"
+  />
+
+  <label for="largeur">Largeur (cm) :</label>
+  <input
+    type="number"
+    id="largeur"
+    name="largeur"
+    [(ngModel)]="demande.largeur"
+    required
+    min="0"
+    step="0.01"
+  />
+
+  <label for="hauteur">Hauteur (cm) :</label>
+  <input
+    type="number"
+    id="hauteur"
+    name="hauteur"
+    [(ngModel)]="demande.hauteur"
+    required
+    min="0"
+    step="0.01"
+  />
+
+  <label for="trajetId">Trajet ID :</label>
+  <input
+    type="number"
+    id="trajetId"
+    name="trajetId"
+    [(ngModel)]="demande.trajetId"
+    required
+  />

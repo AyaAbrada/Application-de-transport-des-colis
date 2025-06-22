@@ -1,14 +1,14 @@
 <nav>
-  <ul style="display: flex; gap: 1rem; list-style: none;">
-    <li><a routerLink="/">Accueil</a></li>
+    <ul>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Accueil</a></li>
 
-    <ng-container *ngIf="!isAuthenticated(); else loggedIn">
-      <li><a routerLink="/login">Login</a></li>
-      <li><a routerLink="/register">Register</a></li>
-    </ng-container>
+        <ng-container *ngIf="!isAuthenticated(); else loggedIn">
+            <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+            <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
+        </ng-container>
 
-    <ng-template #loggedIn>
-      <li><a (click)="logout()" style="cursor: pointer;">Logout</a></li>
-    </ng-template>
-  </ul>
+        <ng-template #loggedIn>
+            <li><a (click)="logout()" class="logout-btn" tabindex="0" role="button" aria-label="Logout">Logout</a></li>
+        </ng-template>
+    </ul>
 </nav>
