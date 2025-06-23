@@ -1,5 +1,5 @@
 nav {
-  background-color: #007fff;
+  background-color: #95b8ff;
   padding: 2rem 3rem;
   box-shadow: 0 2px 4px rgb(0 0 0 / 0.2);
 }
@@ -27,8 +27,8 @@ li a {
 
 li a:hover,
 li a.active {
-  color: #ffc107;
-  background-color: rgba(255, 193, 7, 0.15);
+  color: #c107ff;
+  background-color: rgb(237, 206, 248);
 }
 
 .logout-btn {
@@ -37,6 +37,30 @@ li a.active {
 }
 
 .logout-btn:focus {
-  outline: 2px solid #ffc107;
+  outline: 2px solid #c107ff;
   outline-offset: 2px;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem;
+  }
+
+  ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  li {
+    width: 100%;
+  }
+
+  li a {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+  }
+}
+

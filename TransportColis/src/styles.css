@@ -3,3 +3,6 @@
   padding: 0;
   box-sizing: border-box; /* utile aussi souvent */
 }
+body {
+  background: linear-gradient(to right, #3f5cd6, #4f70ca, #90aae8);
+}

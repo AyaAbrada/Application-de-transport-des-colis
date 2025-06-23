@@ -13,7 +13,7 @@ import java.util.Collections;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest 
+@SpringBootTest
 @AutoConfigureMockMvc
 public class TrajetControllerIntegrationTest {
 

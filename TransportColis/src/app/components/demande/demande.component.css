@@ -1,5 +1,5 @@
 h2, h3 {
-  color: #007bff;
+  color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-transform: uppercase;
   text-align: center;
@@ -16,7 +16,7 @@ ul {
 }
 
 li {
-  background: #f0f4f8;
+  background: rgba(240, 244, 248, 0.5);
   padding: 12px 20px;
   margin-bottom: 10px;
   border-radius: 10px;
@@ -43,7 +43,7 @@ form {
   max-width: 500px;
   margin: 0 auto 40px;
   padding: 20px;
-  background: white;
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   display: flex;

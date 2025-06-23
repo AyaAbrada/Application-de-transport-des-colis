@@ -12,15 +12,15 @@
     placeholder="Mot de passe"
     required />
 
-  <!-- Select role -->
-  <select [(ngModel)]="user.role" name="role" required>
+  <select
+    [(ngModel)]="user.role"
+    name="role"
+    required>
     <option value="" disabled selected>Select Role</option>
-    <option value="ADMIN">ADMIN</option>
-    <option value="EXPEDITEUR">EXPÉDITEUR</option>
-    <option value="CONDUCTEUR">CONDUCTEUR</option>
+    <option value="ADMIN">Admin</option>
+    <option value="EXPEDITEUR">Expéditeur</option>
+    <option value="CONDUCTEUR">Conducteur</option>
   </select>
 
   <button type="submit">Se connecter</button>
 </form>
-
-<p *ngIf="message">{{ message }}</p>
