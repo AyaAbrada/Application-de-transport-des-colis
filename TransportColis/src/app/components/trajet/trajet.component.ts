@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Trajet, TypeMarchandise, TrajetService } from '../../services/trajet.service';
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trajet',
   templateUrl: './trajet.component.html',
-  imports: [
-    FormsModule, CommonModule
-],
-  styleUrls: ['./trajet.component.css']
+  styleUrls: ['./trajet.component.css'],
+  standalone: true,
+  imports: [FormsModule, CommonModule]
 })
 export class TrajetComponent implements OnInit {
 
@@ -30,7 +30,7 @@ export class TrajetComponent implements OnInit {
 
   message = '';
 
-  constructor(private trajetService: TrajetService) {}
+  constructor(private trajetService: TrajetService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadTrajets();
@@ -74,5 +74,11 @@ export class TrajetComponent implements OnInit {
         this.message = 'Erreur lors de la création du trajet : ' + err.message;
       }
     });
+  }
+
+  goToDemandeForm(trajetId: number | undefined): void {
+    if (trajetId !== undefined) {
+      this.router.navigate(['/demande'], { queryParams: { trajetId } });
+    }
   }
 }

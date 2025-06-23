@@ -19,7 +19,7 @@ export interface Demande {
 })
 export class DemandeService {
 
-  private baseUrl = 'http://localhost:8080/demandes'; // adapter selon ton backend
+  private baseUrl = 'http://localhost:8080/demandes'; // adapter selon backend
 
   constructor(private http: HttpClient) { }
 

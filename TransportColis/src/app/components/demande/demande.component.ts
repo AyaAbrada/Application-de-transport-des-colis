@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 interface Demande {
   id?: number;
@@ -11,76 +13,83 @@ interface Demande {
   hauteur: number;
   statut?: string;
   trajetId: number;
-  expediteurId?: number;
+  
+}
+
+interface Trajet {
+  id: number;
+  lieuDepart: string;
+  destination: string;
 }
 
 @Component({
   selector: 'app-demande',
   templateUrl: './demande.component.html',
-  imports: [
-    FormsModule
-  ],
-  styleUrls: ['./demande.component.css']
+  imports: [FormsModule, CommonModule],
+  styleUrls: ['./demande.component.css'],
+  standalone: true
 })
 export class DemandeComponent implements OnInit {
 
-  demande = {
-    poids: null,
-    type: '',
-    longeur: null,
-    largeur: null,
-    hauteur: null,
-    trajetId: null,
-  };
-
-
+  trajets: Trajet[] = [];
   demandes: Demande[] = [];
-  filterStatut: string = '';
-  formData: Demande = {
-    poids: 0,
-    type: '',
-    longeur: 0,
-    largeur: 0,
-    hauteur: 0,
-    trajetId: 0
-  };
-  editing: boolean = false;
+  formData: Demande = this.resetFormData();
+  message = '';
 
-  token = 'TON_JWT_TOKEN'; // Remplacer par token réel
-
-  baseUrl = 'http://localhost:8080/demandes';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    // Charger les trajets
+    this.http.get<Trajet[]>('http://localhost:8080/trajets')
+      .subscribe(data => this.trajets = data);
+
+    // Charger toutes les demandes
     this.loadDemandes();
+
+    // Récupérer trajetId depuis query params (optionnel)
+    this.route.queryParams.subscribe(params => {
+      const trajetId = params['trajetId'];
+      if (trajetId) {
+        this.initDemandeForm(+trajetId);
+      }
+    });
   }
 
-  loadDemandes() {
-    let url = this.baseUrl;
-    if (this.filterStatut) {
-      url += `/statut/${this.filterStatut}`;
+  loadDemandes(): void {
+    this.http.get<Demande[]>('http://localhost:8080/demandes')
+      .subscribe(data => this.demandes = data);
+  }
+
+  initDemandeForm(trajetId: number): void {
+    this.formData = this.resetFormData();
+    this.formData.trajetId = trajetId;
+    this.message = '';
+  }
+
+  saveDemande(): void {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('Token non trouvé, veuillez vous connecter.');
+      return;
     }
-    this.http.get<Demande[]>(url).subscribe(data => this.demandes = data);
+
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    this.http.post('http://localhost:8080/demandes', this.formData, { headers })
+      .subscribe({
+        next: () => {
+          this.message = 'Demande envoyée avec succès !';
+          this.formData = this.resetFormData();
+          this.loadDemandes(); // Actualiser la liste des demandes
+        },
+        error: (error) => {
+          this.message = 'Erreur lors de l’envoi de la demande : ' + error.message;
+        }
+      });
   }
 
-  appliquerFiltre(statut: string) {
-    this.filterStatut = statut;
-    this.loadDemandes();
-  }
-
-  startEdit(demande: Demande) {
-    this.editing = true;
-    this.formData = { ...demande };
-  }
-
-  annulerEdit() {
-    this.editing = false;
-    this.resetForm();
-  }
-
-  resetForm() {
-    this.formData = {
+  resetFormData(): Demande {
+    return {
       poids: 0,
       type: '',
       longeur: 0,
@@ -89,40 +98,4 @@ export class DemandeComponent implements OnInit {
       trajetId: 0
     };
   }
-
-  saveDemande() {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
-
-    if (this.editing && this.formData.id) {
-      this.http.put<Demande>(`${this.baseUrl}/${this.formData.id}`, this.formData, { headers }).subscribe(() => {
-        alert('Demande mise à jour');
-        this.loadDemandes();
-        this.annulerEdit();
-      });
-    } else {
-      this.http.post<Demande>(this.baseUrl, this.formData, { headers }).subscribe(() => {
-        alert('Demande créée');
-        this.loadDemandes();
-        this.resetForm();
-      });
-    }
-  }
-
-  accepterDemande(id: number) {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
-    this.http.put<Demande>(`${this.baseUrl}/${id}/statut?action=accepter`, null, { headers }).subscribe(() => this.loadDemandes());
-  }
-
-  refuserDemande(id: number) {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
-    this.http.put<Demande>(`${this.baseUrl}/${id}/statut?action=refuser`, null, { headers }).subscribe(() => this.loadDemandes());
-  }
-
-  supprimerDemande(id: number) {
-    if (confirm('Confirmer la suppression ?')) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
-      this.http.delete<void>(`${this.baseUrl}/${id}`, { headers }).subscribe(() => this.loadDemandes());
-    }
-  }
-  
 }

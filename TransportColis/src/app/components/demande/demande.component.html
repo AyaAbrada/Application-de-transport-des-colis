@@ -1,63 +1,39 @@
-<h3>Créer une nouvelle demande</h3>
 
-  <label for="poids">Poids (kg) :</label>
-  <input
-    type="number"
-    id="poids"
-    name="poids"
-    [(ngModel)]="demande.poids"
-    required
-    min="0"
-    step="0.01"
-  />
+<hr>
+<h3>Créer une demande</h3>
+<form (ngSubmit)="saveDemande()" #demandeForm="ngForm" *ngIf="formData.trajetId">
 
-  <label for="type">Type :</label>
-  <input
-    type="text"
-    id="type"
-    name="type"
-    [(ngModel)]="demande.type"
-    required
-  />
+  <p><strong>Trajet sélectionné ID:</strong> {{ formData.trajetId }}</p>
 
-  <label for="longeur">Longueur (cm) :</label>
-  <input
-    type="number"
-    id="longeur"
-    name="longeur"
-    [(ngModel)]="demande.longeur"
-    required
-    min="0"
-    step="0.01"
-  />
+  <label>Poids (kg) :</label>
+  <input type="number" [(ngModel)]="formData.poids" name="poids" required />
 
-  <label for="largeur">Largeur (cm) :</label>
-  <input
-    type="number"
-    id="largeur"
-    name="largeur"
-    [(ngModel)]="demande.largeur"
-    required
-    min="0"
-    step="0.01"
-  />
+  <label>Type :</label>
+  <input type="text" [(ngModel)]="formData.type" name="type" required />
 
-  <label for="hauteur">Hauteur (cm) :</label>
-  <input
-    type="number"
-    id="hauteur"
-    name="hauteur"
-    [(ngModel)]="demande.hauteur"
-    required
-    min="0"
-    step="0.01"
-  />
+  <label>Longueur (cm) :</label>
+  <input type="number" [(ngModel)]="formData.longeur" name="longeur" required />
 
-  <label for="trajetId">Trajet ID :</label>
-  <input
-    type="number"
-    id="trajetId"
-    name="trajetId"
-    [(ngModel)]="demande.trajetId"
-    required
-  />
+  <label>Largeur (cm) :</label>
+  <input type="number" [(ngModel)]="formData.largeur" name="largeur" required />
+
+  <label>Hauteur (cm) :</label>
+  <input type="number" [(ngModel)]="formData.hauteur" name="hauteur" required />
+
+  <button type="submit" [disabled]="demandeForm.invalid">Envoyer</button>
+</form>
+
+<p *ngIf="message">{{ message }}</p>
+
+<hr>
+
+<h2>Liste des demandes</h2>
+<ul>
+  <li *ngFor="let demande of demandes">
+    <strong>Trajet ID:</strong> {{ demande.trajetId }} —
+    <strong>Poids:</strong> {{ demande.poids }} kg —
+    <strong>Type:</strong> {{ demande.type }} —
+    <strong>Dimensions (L×l×h):</strong> {{ demande.longeur }}×{{ demande.largeur }}×{{ demande.hauteur }} cm —
+    <strong>Statut:</strong> {{ demande.statut || 'Non spécifié' }}
+  </li>
+</ul>
